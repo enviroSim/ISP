@@ -30,6 +30,8 @@ public class ISP extends JFrame implements WindowListener
         setResizable(false);//
         pack();//switching these two caused unwanted size problems.....
     	setVisible(true);
+    	myStage.addSprite(new Algae());
+    	myStage.addSprite(new Algae());
     	System.out.println("panel dimensions: "+myStage.getSize());
     	System.out.println("frame dimensions: "+this.getSize());
     }

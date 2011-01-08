@@ -10,8 +10,8 @@ import js.math.LineSegment;
 
 public class ISPStage extends JPanel implements Runnable
 {
-	private static int WIDTH;  //size of stage
-	private static int HEIGHT;
+	static int WIDTH;  //size of stage
+	static int HEIGHT;
 
 	private Thread animator; //does the animation
 
@@ -33,7 +33,7 @@ public class ISPStage extends JPanel implements Runnable
 	private Color backcolor;
 
 	//drawing variables
-	private Graphics dbg;
+	private Graphics2D dbg;
 	//probably a newer, better way to do this than the awt.Image class, but that'll be later
 	private Image dbImage = null;
 
@@ -186,16 +186,18 @@ public class ISPStage extends JPanel implements Runnable
 		{
 			if(sprites.size()>0)
 			{
-				for(ISPSprite spr: sprites)
-				{
+				Iterator <ISPSprite> it = sprites.iterator();
+				while(it.hasNext()) {
+					ISPSprite spr = it.next();
 					spr.act();
 					if(!(isInBounds(spr)))
 					{
 						spr.offStage(this);
 					}
 				}
-				for(ISPSprite a: sprites)
-				{
+				it = sprites.iterator();
+				while(it.hasNext()) {
+					ISPSprite a = it.next();
 					if(spritesToBeRemoved.contains(a))
 					{
 						continue;
@@ -214,7 +216,6 @@ public class ISPStage extends JPanel implements Runnable
 				}
 				flushSprites();
 			}
-
 		}
 	}
 
@@ -234,10 +235,10 @@ public class ISPStage extends JPanel implements Runnable
 			}
 			else
 			{
-				dbg = dbImage.getGraphics();
+				dbg = (Graphics2D) dbImage.getGraphics();
 			}
 		}
-
+		dbg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//clear the background
 		dbg.setColor(backcolor);
 		dbg.fillRect(0,0,WIDTH,HEIGHT);//for some reason it doesn't fill whole screen....
@@ -410,6 +411,7 @@ public class ISPStage extends JPanel implements Runnable
 			System.out.println("Recalculating grid");
 			recalcGrid(spr);
 		}
+		spr.setStage(this);
 	}
 
 	public void removeSprite(ISPSprite spr)

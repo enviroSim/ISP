@@ -19,6 +19,7 @@ public abstract class ISPSprite
 	private BufferedImage myImage;
 	private js.physics.Vector myVector;
 	private LinkedList<Point> path;
+	private ISPStage myStage;
 	
 	public ISPSprite()
 	{
@@ -36,7 +37,6 @@ public abstract class ISPSprite
 
 	public ISPSprite(double xx, double yy)
 	{
-		this();
 		x = xx;
 		y = yy;
 	}
@@ -64,6 +64,10 @@ public abstract class ISPSprite
 		this((double)xx,(double)yy,v,d,sq);
 	}
 
+	public void setStage(ISPStage s) {
+		myStage = s;
+	}
+	
 	public void loadImage(String s)
 	{
 		//use ImageLoader to get the image from the file
